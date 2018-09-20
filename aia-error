@@ -1,0 +1,110 @@
+We are in the process of integrating Siebel,OSM and BRm with AIA domain throgh silent installation. We have successfully created aia domain and could see the default 6 composites in em console.
+
+Below is the error we are seeing while running run_config.sh script like below.
+source /opt/app/fmw1221/domains/aia_domain/soa/aia/bin/aiaenv.sh && cd /opt/app/fmw1221/product/ORACLE_AIA/comms_home/config/ && sh run_config.sh -mode=silent -responseFile=/opt/app/fmw1221/../aiao2c.rsp -noValidations
+
+Error:
+    - 'executeDP:'
+    - Configuration Errored out with below error.....
+    - '/opt/app/fmw1221/product/ORACLE_AIA/comms_home/config/postInstallConfiguration.xml:100: The following error occurred while executing this line:'
+    - '/opt/app/fmw1221/product/soa/aiafp/Install/AID/AIAInstallDriver.xml:197: The following error occurred while executing this line:'
+    - '/opt/app/fmw1221/product/soa/aiafp/Install/AID/AIAExecuteDriver.xml:152: The following error occurred while executing this line:'
+    - '/opt/app/fmw1221/product/soa/aiafp/Install/AID/AIAExecuteDriver.xml:92: The following error occurred while executing this line:'
+    - '/opt/app/fmw1221/domains/praveen_domain/soa/aia/tmp/AIDExecuteDP_temp_935354645.xml:6: The following error occurred while executing this line:'
+    - '/opt/app/fmw1221/product/soa/aiafp/Install/AID/lib/AIDConfigurationLibraryTasks.xml:185: java.sql.SQLException: ORA-01017: invalid username/password; logon denied'
+    
+I strongly believe that this error is misleading and suspecting table space issue. For a better clarity I am sharing the response file I am using for this silent installation. Please help me understand and fix the issue. Please note that I am using dummy brm,siebel and osm configuration to test silent installation.
+
+aiao2c.rsp:
+####################################################################################################
+#Response file
+#Wed Sep 12 13:59:55 UTC 2018
+
+#Generic
+MDMProductBRM=false
+PDC=false
+AABC_PIP=false
+MDMProductDS=false
+MDMProductSiebel=false
+MDMProductBase=false
+
+#Domain
+DOMAIN_LOCATION=/opt/app/fmw1221/domains/praveen_domain
+SOA_WL_ADMIN_PORT=7001
+SOA_WL_DOMAIN_NAME=praveen_domain
+SOA_WL_ADMIN_USER=weblogic
+SOA_WL_MS_NAME=SOA_Cluster
+SOA_WL_MS_HOST=172.31.80.122
+SOA_WL_MS_PORT=9000
+SOA_WL_ADMIN_PASSWORD=welcome1
+SOA_WL_ADMIN_HOST=172.31.86.85
+SHARED_LOCATION=
+
+#DB
+SOA_DB_HOST_NAME=mymw.cxbnidlxavbf.us-east-1.rds.amazonaws.com
+SOA_DB_SYS_ROLE=Normal
+SOA_DB_SYS_USER=praveen
+SOA_DB_PASSWORD=Praveen#28
+SOA_DB_PORT=1521
+SOA_DB_SYS_PASSWORD=#Praveen28
+SOA_DB_USER=praveen
+SOA_SID=mymw
+
+#XREF
+XREF_TEMP_TABLESPACE=TEMP
+XREF_SCHEMA_PASSWORD=Praveen#28
+SPLIT_XREF=true
+XREF_DEFAULT_TABLESPACE=
+XREF_SCHEMA_NAME=AIAPRA_COMMS_XREF
+XREF_SCHEMA_SYS_ROLE=Normal
+XREF_SCHEMA_SYS_USER=praveen
+XREF_SCHEMA_SYS_PASSWORD=#Praveen28
+
+#BRM
+Order2Cash_brm=true
+BRM_VERSION=7.5
+BRM_PRIMARY_CM_HOST=localhost
+BRM_PRIMARY_CM_PORT=12900
+BRM_AQ_PSWD=brmaqpwd
+BRM_AQ_USER=brmaquser
+BRM_AQ_DB_SID=mymw
+BRM_AQ_QUEUE=brmaq
+BRM_DB_PORT=1521
+BRM_DB_HOST=localhost
+
+#Siebel
+Order2Cash_Siebel=true
+SBL_LANG=enu
+SBL_PROTOCOL=http
+SBL_VERSION=8.1.1.6
+SBL_HOST=localhost
+SBL_ENTERPRISE_SERVER_NAME=localhost
+SBL_PORT=9000
+SBL_EAI_USER=sbleaiuser
+SBL_EAI_PSWD=sbleaipwd
+SBL_DB_HOST=localhost
+SBL_DB_PORT=1521
+SBL_DB_SID=sblsid
+SBL_DB_USER=sbldbuser
+SBL_DB_PSWD=sbldbpwd
+
+#SPM
+SPM_PROXY_PORT=
+SPM_PROXY_HOST=
+
+#OSM
+Order2Cash_osm=true
+OSM_VERSION=8.5
+OSM_CFS_ADMIN_USER=osmcfsusr
+OSM_CFS_ADMIN_PSWD=osmcfspwd
+OSM_CFS_WL_JMS_QUEUE_ACCESS_USER=cfsjmsqueueaccessusr
+OSM_CFS_WL_JMS_QUEUE_ACCESS_PSWD=cfsjmsqueueaccesspwd
+OSM_CFS_WL_JMS_QUEUE_ACCESS_PORT=8001
+OSM_CFS_WL_JMS_QUEUE_ACCESS_HOST=localhost
+OSM_PROV_ADMIN_USER=osmprovusr
+OSM_PROV_ADMIN_PSWD=osmprovpwd
+OSM_PROV_WL_JMS_QUEUE_ACCESS_HOST=localhost
+OSM_PROV_WL_JMS_QUEUE_ACCESS_PORT=8001
+OSM_PROV_WL_JMS_QUEUE_ACCESS_USER=provjmsqueueaccessusr
+OSM_PROV_WL_JMS_QUEUE_ACCESS_PSWD=provjmsqueueaccesspwd
+####################################################################################################
